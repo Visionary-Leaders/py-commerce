@@ -80,4 +80,4 @@ def display_loading_animation(message, color):
     loading_thread.join()
 
     # Clear the loading line
-    print("\r")
+    print("\r" + " " * len(message) + "\r")
