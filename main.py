@@ -27,7 +27,7 @@ def signUp(name, password, login):
         "messages": [],
         "my_products": [],
         "favorite_products": [], }
-    if not checkUser(login, password) and not checkUserAdmin(login, password):
+    if not checkUser(login, password) and not checkUserAdmin(login, password) and len(login) !=0 and len(password) !=0:
         users.append(user)
         userPage(user["id"])
     else:
@@ -42,7 +42,6 @@ def initMain():
         println_colored(f"3.{current_language['lang']}", Color.MAGENTA)
         println_colored("==================================", Color.DARK_ORANGE)
         choose = int(input(current_language['choice']))
-        display_loading_animation(current_language['loading'], Color.BLUE)
         if choose == 1:
             login = input(current_language['input_login'] + ":")
             password = input(current_language['input_password'] + ":")
