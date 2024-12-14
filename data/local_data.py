@@ -16,8 +16,17 @@ eng = {
     "most_sold_product":"Most Sold Product",
     "my_shop_balance":"My Shop Balance",
     "search_product":"Search Product",
-    "all_product_price":"All Product Price"m
-    ""
+    "all_product_price":"All Product Price",
+    "message_with_user":"Message with User",
+    "user_list":"User List",
+    "log_out":"Log out",
+    "most_buyer_user":"Most active users",
+    "remove_product":"Remove Product",
+    "ban_user":"Ban User",
+    "delete_account":"Delete Account",
+    "contact_admin":"Contact Admin",
+
+
 }
 uz = {
     "signUp": "Ro`yhatdan o`tish",
@@ -37,7 +46,15 @@ uz = {
     "most_sold_product":"Eng ko`p sotilgan Product",
     "my_shop_balance":"Mening Shop Balansim",
     "search_product":"Productni qidirish",
-    "all_product_price":"Barcha Productlar narxi"
+    "all_product_price":"Barcha Productlar narxi",
+    "message_with_user":"Foydalanuvchiga xabar yuborish",
+    "user_list":"Foydalanuvchilar royhati",
+    "log_out":"Chiqish",
+    "most_buyer_user":"Eng faol foydalanuvchilar",
+    "remove_product":"Productni o`chirish",
+    "ban_user":"Foydalanuvchini ban qilish",
+    "delete_account":"Profilni o`chirish",
+    "contact_admin":"Admin bilan aloqa",
 }
 
-current_language = uz
+lang = uz
