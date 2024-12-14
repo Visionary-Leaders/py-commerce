@@ -25,7 +25,9 @@ eng = {
     "ban_user":"Ban User",
     "delete_account":"Delete Account",
     "contact_admin":"Contact Admin",
-
+    "product_name":"Product Name",
+    "product_price":"Product Price",
+    "success_added_product":"Product Added Success !"
 
 }
 uz = {
@@ -34,7 +36,7 @@ uz = {
     "signout": "Chiqish",
     "name": "Ism",
     "lang": "Til",
-    "choice": "Tanlovingizni kiriting",
+    "choice": "Tanlovingizni kiriting:",
     "invalid_choice": "Yaroqsiz tanlov !",
     "input_password": "Parolni kiriting",
     "loading":"Yuklanmoqda",
@@ -55,6 +57,10 @@ uz = {
     "ban_user":"Foydalanuvchini ban qilish",
     "delete_account":"Profilni o`chirish",
     "contact_admin":"Admin bilan aloqa",
+    "product_name":"Mahsulot Nomi",
+    "product_price":"Mahsulot Narxi",
+    "success_added_product":"Mahsulot Muvaffaqiyatli Qo`shildi"
 }
+
 
 lang = uz
