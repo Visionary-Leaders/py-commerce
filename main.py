@@ -1,5 +1,5 @@
 from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import eng, uz, lang,admin_info,users
+from data.local_data import eng, uz, lang, admin_info, users
 from admin_panel.admin_data import checkUserAdmin
 from admin_panel.admin_service import admin_page
 from user_panel.user_data import checkUser, getUserId
@@ -21,11 +21,12 @@ def signUp(name, password, login):
         "name": name,
         "password": password,
         "login": login,
+        "comments": [],
         "balance": 10000,
         "role": "user",
         "messages": [],
-        "my_products": [],
-        "favorite_products": [], }
+        "myProducts": [],
+        "favoriteProducts": [], }
     if not checkUser(login, password) and not checkUserAdmin(login, password) and len(login) != 0 and len(
             password) != 0:
         users.append(user)

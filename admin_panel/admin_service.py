@@ -128,14 +128,9 @@ def messageToUser():
 
     recipient_id = int(input(f"{lang['enter_recipent_id']} "))
 
-    recipient = None
-    for user in users:
-        if user['id'] == recipient_id:
-            recipient = user
-            break
+    recipient = next((user for user in users if user['id'] == recipient_id), None)
 
     if recipient:
-
         title = input(f"{lang['enter_message_title']}: ")
         message_description = input(f"{lang['enter_message_description']}: ")
 
@@ -146,6 +141,7 @@ def messageToUser():
             "to": recipient  # Recipient user details
         }
 
+        # Initialize messages list if not present
         if 'messages' not in recipient:
             recipient['messages'] = []
         recipient['messages'].append(message)
@@ -153,7 +149,6 @@ def messageToUser():
         println_colored(f"{recipient['name']} {lang['message_sent_to']} !", Color.GREEN)
     else:
         println_colored(lang['user_not_found'], Color.RED)
-
 
 def messageToMe():
     print(f"\n===== {lang['admin_inbox']} =====")
@@ -330,6 +325,13 @@ def admin_page():
         elif choose == '13':
             maxPriceProduct()
         elif choose == '14':
-            pass
+            confirm = input(f"{lang['confirm_logout']} (y/n): ").strip().lower()
+            if confirm == 'y':
+                display_loading_animation(lang['loading'], Color.CYAN)
+                println_colored(f"{lang['account_exited']}", Color.GREEN)
+                return
+            else:
+                println_colored(lang['action_cancelled'], Color.RED)
+
         else:
             println_colored(lang["invalid_choice"], Color.RED)
