@@ -194,37 +194,54 @@ def buyProduct(user_id):
     product["sold_count"] += 1
 
 
-def productList():
-    display_loading_animation(lang['loading'], Color.MAGENTA)  # Loading animatsiyasini ko'rsatish
-    if not products:  # Mahsulotlar ro'yxati bo'sh bo'lsa
-        println_colored(lang['no_products'], Color.RED)  # Mahsulotlar yo'qligi haqida xabar berish
+def productList(user_id):
+    display_loading_animation(lang['loading'], Color.MAGENTA)
+
+    if not products:
+        println_colored(lang['no_products'], Color.RED)
     else:
         println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
 
-        # Mahsulotlarni ro'yxatlash
         for product in products:
             println_colored(
                 f"{lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
                 Color.DARK_ORANGE)
 
-        # Mahsulotlar ro'yxatini yakunlash
         println_colored("============================================================", Color.CYAN)
-
-        # Qo'shimcha amallar uchun menyu
         print("\n1. Add to Favorites")
-        print(f"2. {lang['back']}")
+        print("2. Add Comment")
+        print(f"3. {lang['back']}")
 
-        action = input(lang["enter_action_choice"])  # Foydalanuvchidan amalni tanlashni so'rash
+        action = input(lang["enter_action_choice"])
+
         if action == "1":
-            product_id = int(input(lang["enter_product_id_for_action"]))  # Qaysi mahsulotni tanlashni so'rash
-            # addToFavorites(product_id)  # Sevimlilarga qo'shish funksiyasini chaqirish
+            product_id = int(input(lang["enter_product_id_for_action"]))
+            addToFavorites(user_id, product_id)
         elif action == "2":
-            product_id = int(input(lang["enter_product_id_for_action"]))  # Qaysi mahsulotga izoh qo'shishni so'rash
-            # addComment(product_id)  # Izoh qo'shish funksiyasini chaqirish
+            product_id = int(input(lang["enter_product_id_for_action"]))
+            # addComment(product_id)  # Call function to add a comment
         elif action == "3":
-            return  # Oldingi sahifaga qaytish
+            return  # Return to the previous page or main menu
         else:
-            println_colored(lang["invalid_action"], Color.RED)  # Yaroqsiz amal
+            println_colored(lang["invalid_action"], Color.RED)  # Invalid action handling
+
+def addToFavorites(user_id, product_id):
+    # Find the user and product
+    user = next((u for u in sers if u["id"] == user_id), None)
+    product = next((p for p in products if p["id"] == product_id), None)
+
+    if not user or not product:
+        println_colored("User or product not found", Color.RED)
+        return
+
+    # Check if product is already in favorites
+    if product in user["favoriteProducts"]:
+        println_colored("This product is already in your favorites.", Color.RED)
+        return
+
+    # Add the product to the user's favorite list
+    user["favoriteProducts"].append(product)
+    println_colored(f"{lang['add_to_favorites']}", Color.DARK_ORANGE)
 
 
 def get_user_by_id(user_id):
