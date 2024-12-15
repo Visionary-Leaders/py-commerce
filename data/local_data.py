@@ -9,6 +9,9 @@ eng = {
     "admin_inbox":"Admin's Inbox",
     "login": "Login",
     'price': "Price",
+    "products":"Products",
+    "no_users_found": "No users found.",
+    "most_active_users": "Most Active Users",
     "choice": "Enter your choice:",
     "invalid_choice": "Invalid choice",
     'no_message':"No messages received yet",
@@ -30,7 +33,7 @@ eng = {
     "message_from":"Message from",
     "user_not_found": "User not found",
     "log_out": "Log out",
-    "most_buyer_user": "Most active users",
+    "most_buyer_user": "Most active user",
     "remove_product": "Remove Product",
     "ban_user": "Ban User",
     "delete_account": "Delete Account",
@@ -49,8 +52,20 @@ eng = {
     'date': "Date",
     "enter_recipent_id": "Enter recipient ID to send a message:",
     "enter_message_title": "Enter message title:",
-    "enter_message_description": "Enter message description"
-
+    "enter_message_description": "Enter message description",
+    "removed_products": "Removed products",
+    "confirm_removal":"Are you sure you want to remove this product?",
+    "success_removed_product": "Product removed !",
+    "removal_cancelled":"Removal cancelled !",
+    "product_list": "Product List",
+    "restore_product":"Restore Product",
+    "back":"Back",
+    "clear_removed_products":"Clear removed products",
+    "product_restored":"Product restored !",
+    "action_cancelled":"Action cancelled !",
+    "confirm_clear_removed":"Are you sure you want to clear removed products?",
+    "back_to_menu":"Back to menu",
+    "sold_count":"Sold count"
 }
 uz = {
     "signUp": "Ro`yhatdan o`tish",
@@ -74,7 +89,7 @@ uz = {
     "message_to_user": "Foydalanuvchiga xabar yuborish",
     "user_list": "Foydalanuvchilar royhati",
     "log_out": "Chiqish",
-    "most_buyer_user": "Eng faol foydalanuvchilar",
+    "most_buyer_user": "Eng faol foydalanuvchi",
     "remove_product": "Productni o`chirish",
     "ban_user": "Foydalanuvchini ban qilish",
     "delete_account": "Profilni o`chirish",
@@ -104,6 +119,26 @@ uz = {
     "title": "Ism",
     "description": "Xabar matni",
     "message_from": "Xabar yuboruvchisi",
+    "products":"Mahsulotlar",
+    "no_users_found": "Foydalanuvchilar topilmadi.",
+    "most_active_users": "Eng faol foydalanuvchi",
+    "removed_products": "O`chirilgan mahsulotlar",
+    "confirm_removal": "Ushbu mahsulotni rostdan ham o`chirmoqchimisiz?",
+    "success_removed_product": "Mahsulot o`chirildi !",
+    "removal_cancelled": "O`chirish bekor qilindi !",
+    "product_list": "Mahsulotlar ro`yhati",
+    "restore_product": "Mahsulotni qayta qo`shish",
+    "back": "Orqaga",
+    "clear_removed_products": "O`chirilgan mahsulotlarni tozalash",
+    "removed_products_cleared": "O`chirilgan mahsulotlar tozalandi !",
+    "shop_balance": "Shop balansi",
+    "product_restored": "Mahsulot qayta qo`shildi !",
+    "confirm_clear_removed":"Ushbu mahsulotlarni rostdan ham tozalmoqchimisiz?",
+    "action_cancelled":"Amallar bekor qilindi !",
+    "back_to_menu":"Orqaga",
+    "sold_count":"Sotilgan son"
 }
+
+
 
 lang = uz
