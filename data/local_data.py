@@ -3,6 +3,7 @@ eng = {
     "signin": "Sign In",
     "title":"Title",
     "signout": "Sign Out",
+    "welcome":"Welcome",
     "lang": "Language",
     "description":"Description",
     "name": "Name",
@@ -12,6 +13,7 @@ eng = {
     "products":"Products",
     "no_users_found": "No users found.",
     "most_active_users": "Most Active Users",
+    "current_profile": "Current Profile",
     "choice": "Enter your choice:",
     "invalid_choice": "Invalid choice",
     'no_message':"No messages received yet",
@@ -24,6 +26,7 @@ eng = {
     "edit_product": "Edit Product",
     "most_sold_product": "Most Sold Product",
     "my_shop_balance": "My Shop Balance",
+    'balance': "Balance",
     "search_product": "Search Product",
     "all_product_price": "All Product Price",
     "message_to_user": "Message to User",
@@ -65,12 +68,49 @@ eng = {
     "action_cancelled":"Action cancelled !",
     "confirm_clear_removed":"Are you sure you want to clear removed products?",
     "back_to_menu":"Back to menu",
-    "sold_count":"Sold count"
+    "sold_count":"Sold count",
+    "my_balance": "My Balance",
+    "buy_product": "Buy Product",
+    "expensive_product_list": "Expensive Product List",
+    "my_product_list": "My Product List",
+    "my_profile": "My Profile",
+    "edit_profile": "Edit Profile",
+    "favorite_product": "Favorite Product",
+    "exit_account": "Exit Account",
+    "success_deleted_account": "Account deleted !",
+    'add_balance': "Add Balance",
+    'username': "Username",
+    "your_current_balance":"Your current balance is",
+    "enter_amount":"Enter the amount to add to your balance:",
+    "success_added_balance":"Your balance has been updated! New balance !",
+    "no_balance":"Balance not found !",
+    "invalid_amount":"Amount must be positive !",
+    "contact_admin_msg":"Contact Admin Message",
+    "choice_product": "Enter the ID of the product you want to buy:",
+    "invalid_product": "Invalid product ID !",
+    "insufficient_balance":"Insufficient balance !",
+    'password': "Password",
+    "remaining_balance":"Remaining balance:",
+    'edit_name_prompt': "Enter your new name:",
+    'new_name': "Enter your name:",
+    'edit_login_prompt': "Enter your new login:",
+    'new_login': "Enter your login:",
+    'edit_password_prompt': "Enter your new password:",
+    'new_password': "Enter your password:",
+    'login_taken': "Login already exists !",
+    "name_updated_to": "Name updated to",
+    'login_updated_to':"Login updated to",
+    "success_bought_product": "Product bought !",
+    'confirm_password':"Confirm password:",
+    "profile_updated":"Profile updated successfully",
+    "pasword_updated":"Password updated successfully",
+    "password_mismatch":"Passwords do not match !",
 }
 uz = {
     "signUp": "Ro`yhatdan o`tish",
     "signin": "Kirish",
     "signout": "Chiqish",
+    'current_profile': "Hozirgi profil",
     "name": "Ism",
     "lang": "Til",
     "choice": "Tanlovingizni kiriting:",
@@ -78,6 +118,7 @@ uz = {
     "input_password": "Parolni kiriting",
     "loading": "Yuklanmoqda",
     "input_login": "Loginni kiriting",
+    "password": "Parol",
     "register_error": "Login allaqachon mavjud yoki xatolik",
     "login_error": "Login yoki Parol xato",
     "add_product": "Product Qo`shish",
@@ -107,6 +148,7 @@ uz = {
     "max_price_product": "Eng Qimmat mahsulot",
     "message_to_me": "Menga kelgan xabar",
     "price": "Narx",
+    'balance': "Balans",
     "date": "Sana",
     'login': "Login",
     "enter_recipent_id": "Xabar yuborish uchun foydalanuvchi id:",
@@ -136,8 +178,97 @@ uz = {
     "confirm_clear_removed":"Ushbu mahsulotlarni rostdan ham tozalmoqchimisiz?",
     "action_cancelled":"Amallar bekor qilindi !",
     "back_to_menu":"Orqaga",
-    "sold_count":"Sotilgan son"
+    "sold_count":"Sotilgan son",
+    "welcome":"Xush kelibsiz",
+    "username":"Foydalanuvchi nomi",
+    "register":"Ro`yhatdan o`ting",
+    "my_balance": "Mening balansi",
+    "add_balance": "Balans qo`shish",
+    "buy_product": "Mahsulot sotib olish",
+    "expensive_product_list": "Qimmat mahsulotlar ro`yhati",
+    "my_products": "Mening mahsulotlarim",
+    "my_profile": "Mening profilim",
+    "edit_profile": "Profilni tahrirlash",
+    "favorite_product": "Sevimli mahsulotlar",
+    "exit_account": "Profilni o`chirish",
+    "your_current_balance":"Sizning balansingiz",
+    "enter_amount":"Balans qo`shish uchun miqdor kiriting:",
+    "success_added_balance":"Balans muvaffaqiyatli qo`shildi ! Yangi Balans:",
+    "enter_product_id_to_buy":"Sotib olish uchun mahsulot id kiriting:",
+    "product_not_found_to_buy":"Mahsulot topilmadi !",
+    "product_bought_successfully":"Mahsulot muvaffaqiyatli sotildi !",
+    "no_balance":"Balans mavjud emas !",
+    "invalid_amount":"Miqdor noto`g`ri !",
+    "contact_admin_msg":"Admin bilan bog`lanish uchun xabar yuboring:",
+    "choice_product": "Sotib olish uchun mahsulot id kiriting:",
+    "invalid_product": "Noto`g`ri mahsulot id !",
+    "success_bought_product": "Mahsulot sotib olindi !",
+    "insufficient_balance": "Balans yetarli emas !",
+    "remaining_balance": "Qolgan balans:",
+
+    "edit_name_prompt": "Yangi ismingizni kiriting",
+    "new_name": "Ismingizni kiriting: ",
+    "edit_login_prompt": "Yangi loginni kiriting",
+    "new_login": "Loginni kiriting: ",
+    "edit_password_prompt": "Yangi parolni kiriting",
+    "new_password": "Parolni kiriting: ",
+    "confirm_password": "Parolni tasdiqlang: ",
+    "login_taken": "Bu login allaqachon mavjud!",
+    'login_updated_to':"Login muvaffaqiyatli tahrirlandi ! Yangi login:",
+    'name_updated_to': "Ism muvaffaqiyatli tahrirlandi ! Yangi ism:",
+    "password_updated":"Parol muvaffaqiyatli tahrirlandi !",
+    "password_mismatch":"Parollar mos kelmadi !",
+    'profile_updated':"Profil muvaffaqiyatli tahrirlandi !",
 }
+
+
+products = [
+    {"id": 1, "product_name": "Laptop", "product_price": "1000", "product_date": "12/15/2024 10:30:45",
+     "sold_count": 0},
+    {"id": 2, "product_name": "Smartphone", "product_price": "500", "product_date": "12/16/2024 11:25:32",
+     "sold_count": 0},
+    {"id": 3, "product_name": "Tablet", "product_price": "300", "product_date": "12/17/2024 12:40:50", "sold_count": 0}
+]
+
+
+
+
+admin_info = {
+    "admin_login": "superadmin",
+    "admin_password": "1234",
+    'messages':[
+        {
+            "title": "Account Issue",
+            "description": "I cannot log in to my account. Please assist.",
+            "from": {
+                "id": 1,
+                "name": "John Doe",
+                "login": "john123"
+            },
+            "to": {
+                "id": "superadmin",
+                "role": "admin"
+            }
+        },
+    ],
+    "role": "admin"
+}
+
+
+users = [
+    {
+        "id": 1,
+        "name": "John Doe",
+        "login": "john123",
+        "password": "johnme",
+        "messages": [],
+        "balance": 0,  # No balance is needed for this example
+        "myProducts": [
+
+        ],  # User's own products
+        "favoriteProducts": []  # User's favorite products
+    },
+]
 
 
 

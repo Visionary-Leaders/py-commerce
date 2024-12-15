@@ -1,19 +1,14 @@
 from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import eng, uz, lang
+from data.local_data import eng, uz, lang,products
 from admin_panel.admin_data import checkUserAdmin, admin_info
 from user_panel.user_data import users, checkUser, getUserId
 from user_panel.user_service import userPage
 from datetime import datetime
 
-products = [
-    {"id": 1, "product_name": "Laptop", "product_price": "1000", "product_date": "12/15/2024 10:30:45", "sold_count": 0},
-    {"id": 2, "product_name": "Smartphone", "product_price": "500", "product_date": "12/16/2024 11:25:32", "sold_count": 0},
-    {"id": 3, "product_name": "Tablet", "product_price": "300", "product_date": "12/17/2024 12:40:50", "sold_count": 0}
+
+removed_products = [
 ]
 
-removed_products =[
-
-]
 
 # ######################### Admin Page ####################
 # Add Product
@@ -173,6 +168,8 @@ def messageToMe():
         println_colored(f"{lang['enter_message_title']} {message['title']}", Color.CYAN)
         println_colored(f"{lang['enter_message_description']} {message['description']}", Color.CYAN)
         print("==================================")
+
+
 def userList():
     display_loading_animation(lang['loading'], Color.MAGENTA)
     println_colored("==================== Users ====================", Color.BLUE)
@@ -180,18 +177,21 @@ def userList():
         println_colored(f"ID: {user['id']} | {lang['name']}: {user['name']} | {lang['login']}: {user['login']}",
                         Color.CYAN)
     println_colored("===============================================", Color.BLUE)
+
+
 def mostActiveUser():
     display_loading_animation(lang['loading'], Color.CYAN)
     if not users:
-        println_colored(lang['no_users_found'],Color.RED)
+        println_colored(lang['no_users_found'], Color.RED)
         return None
     display_loading_animation(lang['loading'], Color.YELLOW)
     most_active_user = max(users, key=lambda user: len(user.get('myProducts', [])))
     product_count = len(most_active_user.get('myproducts', []))
     if product_count == 0:
-        println_colored(lang['no_users_found'],Color.RED)
+        println_colored(lang['no_users_found'], Color.RED)
         return None
-    println_colored(f"{lang['most_active_users']}: {most_active_user['name']} | {lang['products']}: {product_count}", Color.CYAN)
+    println_colored(f"{lang['most_active_users']}: {most_active_user['name']} | {lang['products']}: {product_count}",
+                    Color.CYAN)
 
 
 def removeProduct():
@@ -260,15 +260,17 @@ def removedProducts():
 
 
 def productList():
-   if products == []:
-       println_colored(lang['no_products'], Color.RED)
-   else:
-       println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
-       for product in products:
-           println_colored(
-               f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
-               Color.DARK_ORANGE)
-       println_colored("============================================================", Color.CYAN)
+    if products == []:
+        println_colored(lang['no_products'], Color.RED)
+    else:
+        println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
+        for product in products:
+            println_colored(
+                f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
+                Color.DARK_ORANGE)
+        println_colored("============================================================", Color.CYAN)
+
+
 def myShopBalance():
     display_loading_animation(lang['loading'], Color.CYAN)
     if len(users) == 0:
@@ -301,7 +303,7 @@ def admin_page():
         println_colored(f"14 -> {lang['log_out']}", Color.MAGENTA)
         println_colored("==================================", Color.DARK_ORANGE)
         choose = input(lang['choice'])
-        if choose=='1':
+        if choose == '1':
             productList()
         elif choose == '2':
             addProduct()
@@ -313,7 +315,7 @@ def admin_page():
             myShopBalance()
         elif choose == '6':
             searchProduct()
-        elif choose =='7':
+        elif choose == '7':
             messageToUser()
         elif choose == '8':
             messageToMe()
