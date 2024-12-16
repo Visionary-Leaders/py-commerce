@@ -22,8 +22,8 @@ def setUpMain():
 
         elif choose == '2':
             name = input(f"{language['name']}:")
-            password = input(f"{language['input_password']}:")
             login = input(f"{language['input_login']}:")
+            password = input(f"{language['input_password']}:")
             signUp(name, password, login,language)
 
         elif choose == '3':

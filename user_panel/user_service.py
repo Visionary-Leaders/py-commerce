@@ -142,7 +142,7 @@ def favoriteProduct(user_id):
         else:
             println_colored(f"{language['products']}:", Color.CYAN)
             for product in favorites:
-                print(f"- {product['name']} (ID: {product['id']})")
+                print(f"- {product['product_name']} (ID: {product['id']})")
 
         println_colored("==================================", Color.DARK_ORANGE)
         println_colored(f"1 -> {language['remove_from_favorite']}", Color.CYAN)
