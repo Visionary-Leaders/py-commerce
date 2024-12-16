@@ -47,3 +47,4 @@ def display_loading_animation(message, color):
 
     # Clear the loading line
     print("\r" + " " * len(message) + "\r")
+

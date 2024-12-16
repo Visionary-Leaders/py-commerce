@@ -23,13 +23,13 @@ from user_panel.user_data import users, getUserId
 language ={}
 
 def getUserById(user_id):
-    user = None  # Userni aniqlash
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
-    return user
+   found = None
+   for user in users:
+       if user ["id"] == user_id:
+           found = user
+           break
 
+   return found
 
 def getProductById(product_id):
     id = int(product_id)
@@ -480,18 +480,15 @@ def myBalance(user_id):
 
 def addBalance(user_id):
     user = getUserById(user_id)
+    display_loading_animation(f'{language['loading']}',Color.YELLOW)
     if user:
-        amount = int(input(f"{language['enter_amount']} "))
-        if amount > 0:
-            user["balance"] += amount
-            display_loading_animation(language['loading'], Color.MAGENTA)
-            println_colored(f"{language['success_added_balance']}: {user['balance']}", Color.GREEN)
+        amount=int(input(f"{language['enter_amout']}"))
+        if amount>0:
+            user['balance'] = user['balance'] + amount
         else:
-            println_colored(f"{language['invalid_amount']}", Color.RED)
-
+            println_colored(f'{language['invalid_amount']}',Color.CYAN)
     else:
-        println_colored(f"{language['no_users_found']}", Color.RED)
-
+        println_colored(f'{language['no_users_found']}',Color.RED)
 
 def userPage(user_id,lang):
     global language
