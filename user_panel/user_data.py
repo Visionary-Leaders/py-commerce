@@ -1,6 +1,7 @@
 from data.local_data import users
 
 def checkUser(login1, password1):
+    # USer mavjud mavjud emasligiga tekshiradi
     for user in users:
         if user["login"] == login1 and user["password"] == password1:
             return True
