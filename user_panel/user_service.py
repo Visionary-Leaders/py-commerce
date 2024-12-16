@@ -480,15 +480,15 @@ def myBalance(user_id):
 
 def addBalance(user_id):
     user = getUserById(user_id)
-    display_loading_animation(f'{language['loading']}',Color.YELLOW)
+    display_loading_animation(f"{language['loading']}",Color.YELLOW)
     if user:
         amount=int(input(f"{language['enter_amout']}"))
         if amount>0:
             user['balance'] = user['balance'] + amount
         else:
-            println_colored(f'{language['invalid_amount']}',Color.CYAN)
+            println_colored(f"{language['invalid_amount']}",Color.CYAN)
     else:
-        println_colored(f'{language['no_users_found']}',Color.RED)
+        println_colored(f"{language['no_users_found']}",Color.RED)
 
 def userPage(user_id,lang):
     global language
