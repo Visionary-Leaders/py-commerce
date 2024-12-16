@@ -24,7 +24,7 @@ def setUpMain():
             name = input(f"{language['name']}:")
             password = input(f"{language['input_password']}:")
             login = input(f"{language['input_login']}:")
-            signUp(name, password, login)
+            signUp(name, password, login,language)
 
         elif choose == '3':
             println_colored("==================================", Color.BLUE)

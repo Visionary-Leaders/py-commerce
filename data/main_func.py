@@ -6,9 +6,9 @@ from data.local_data import   users
 from admin_panel.admin_data import checkUserAdmin
 
 
-def signIn(login: str, password: str,lang):
+def signIn(login: str, password: str,language):
     if checkUserAdmin(login, password):
-        admin_page(lang)
+        admin_page(language)
     elif len(users) != 0 and checkUser(login, password):
         userPage(getUserId(login, password))
     else:
@@ -32,4 +32,4 @@ def signUp(name, password, login,lang):
         users.append(user)
         userPage(user["id"],lang)
     else:
-        println_colored(language['register_error'], Color.RED)
+        println_colored(lang['register_error'], Color.RED)
