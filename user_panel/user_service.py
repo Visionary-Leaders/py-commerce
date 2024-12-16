@@ -32,9 +32,10 @@ def getUserById(user_id):
 
 
 def getProductById(product_id):
+    id = int(product_id)
     product = None
     for p in products:
-        if p["id"] == product_id:
+        if p["id"] == id:
             product = p
             break
     return product
@@ -187,15 +188,14 @@ def removeFromFavorites(user_id, product_id):
 
 def searchProduct(user_id):
     search_term = input(f"{language['search_product_name']} : ").lower()
-    found = False
+    found_product=None
     for product in products:
         if search_term in product['product_name'].lower():
-            productDetail(product['id'], user_id=user_id)
-            found = True
-
-    if not found:
+            found_product=product
+    if not found_product:
         println_colored(language['product_not_found'], Color.RED)
-
+    else :
+        productDetail(found_product['id'], user_id=user_id)
 
 def checkLoginExists(new_login):
     return any(user["login"] == new_login for user in users)

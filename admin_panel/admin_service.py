@@ -31,6 +31,7 @@ def addProduct():
     productDate = current_time.strftime("%m/%d/%Y %H:%M:%S")
     products.append({
         "id": len(products) + 1,
+        'comments':[],
         "product_name": productName,
         "product_price": productPrice,
         "product_date": productDate,
