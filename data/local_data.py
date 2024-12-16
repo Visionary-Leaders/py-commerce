@@ -267,6 +267,7 @@ uz = {
     "edit_login_prompt": "Yangi loginni kiriting",
     "new_login": "Loginni kiriting: ",
     "edit_password_prompt": "Yangi parolni kiriting",
+    "product_detail": "Mahsulot haqida",
     "new_password": "Parolni kiriting: ",
     "confirm_password": "Parolni tasdiqlang: ",
     "login_taken": "Bu login allaqachon mavjud!",
@@ -294,9 +295,25 @@ products = [
 admin_info = {
     "admin_login": "superadmin",
     "admin_password": "1234",
-    'messages': [],
+    'messages': [
+
+    ],
     "role": "admin"
 }
 
-users = []
+users = [
+    {
+        "id": 1,
+        "name": "John",
+        "login": "john123",
+        "password": "johnme",
+        "messages": [],
+        "balance": 0,
+        "comments": [],
+        "myProducts": [
+
+        ],
+        "favoriteProducts": []
+    },
+]
 
