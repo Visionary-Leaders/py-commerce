@@ -1,13 +1,10 @@
 from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import eng, uz, lang,products
-from admin_panel.admin_data import checkUserAdmin, admin_info
-from user_panel.user_data import users, checkUser, getUserId
-from user_panel.user_service import userPage
+from data.local_data import lang, products
+from admin_panel.admin_data import admin_info
+from user_panel.user_data import users
 from datetime import datetime
 
-
-removed_products = [
-]
+removed_products = []
 
 
 # ######################### Admin Page ####################
@@ -26,6 +23,7 @@ removed_products = [
 
 
 def addProduct():
+    # { id :automatic, productNomi ,productNarxi, productVaqti, sotilganlarSoni }
     productName = input(lang['product_name'] + ":")
     productPrice = input(lang['product_price'] + ":")
     current_time = datetime.now()
@@ -41,7 +39,8 @@ def addProduct():
     println_colored(lang['success_added_product'], Color.GREEN)
 
 
-def editProduct():
+def showProducts():
+    ## List Product )
     println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
     for product in products:
         println_colored(
@@ -49,6 +48,9 @@ def editProduct():
             Color.DARK_ORANGE)
     println_colored("============================================================", Color.CYAN)
 
+
+def editProduct():
+    showProducts()
     product_id = int(input(lang['enter_product_id'] + ": "))
     selected_product = next((product for product in products if product['id'] == product_id), None)
 
@@ -137,11 +139,10 @@ def messageToUser():
         message = {
             "title": title,
             "description": message_description,
-            "from": {"id": 0, "name": "SuperAdmin", "login": "super_admin"},  # Sender is the Admin
-            "to": recipient  # Recipient user details
+            "from": {"id": 0, "name": "SuperAdmin", "login": "super_admin"},
+            "to": recipient
         }
 
-        # Initialize messages list if not present
         if 'messages' not in recipient:
             recipient['messages'] = []
         recipient['messages'].append(message)
@@ -149,6 +150,7 @@ def messageToUser():
         println_colored(f"{recipient['name']} {lang['message_sent_to']} !", Color.GREEN)
     else:
         println_colored(lang['user_not_found'], Color.RED)
+
 
 def messageToMe():
     print(f"\n===== {lang['admin_inbox']} =====")
@@ -190,13 +192,7 @@ def mostActiveUser():
 
 
 def removeProduct():
-    println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
-    for product in products:
-        println_colored(
-            f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
-            Color.DARK_ORANGE)
-    println_colored("============================================================", Color.CYAN)
-
+    showProducts()
     product_id = int(input(lang['enter_product_id'] + ": "))
     selected_product = next((product for product in products if product['id'] == product_id), None)
 
@@ -217,13 +213,7 @@ def removedProducts():
     if not removed_products:
         println_colored(lang['no_products'], Color.RED)
     else:
-        println_colored(f"========================== {lang['removed_products']} ==========================", Color.CYAN)
-        for product in removed_products:
-            println_colored(
-                f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
-                Color.DARK_ORANGE)
-        println_colored("============================================================", Color.CYAN)
-
+        showProducts()
         print("\n1. " + lang['restore_product'])
         print("2. " + lang['clear_removed_products'])
         print("3. " + lang['back'])
@@ -255,15 +245,10 @@ def removedProducts():
 
 
 def productList():
-    if products == []:
+    if not products:
         println_colored(lang['no_products'], Color.RED)
     else:
-        println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
-        for product in products:
-            println_colored(
-                f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
-                Color.DARK_ORANGE)
-        println_colored("============================================================", Color.CYAN)
+        showProducts()
 
 
 def myShopBalance():

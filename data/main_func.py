@@ -1,8 +1,8 @@
 from admin_panel.admin_service import admin_page
 from user_panel.user_data import checkUser, getUserId
 from user_panel.user_service import userPage
-from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import eng, uz, lang, admin_info, users
+from utils.util import println_colored, Color
+from data.local_data import  lang, users
 from admin_panel.admin_data import checkUserAdmin
 
 

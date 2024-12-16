@@ -1,8 +1,9 @@
 from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import eng, uz, lang, products
+from data.local_data import lang
 from datetime import datetime
-from admin_panel.admin_data import checkUserAdmin, admin_info
-from user_panel.user_data import users, checkUser, getUserId
+from admin_panel.admin_data import admin_info
+from data.local_data import users, products, admin_info
+from user_panel.user_data import users, getUserId
 
 
 # ######################### User Page ####################
@@ -20,72 +21,27 @@ from user_panel.user_data import users, checkUser, getUserId
 # Contact Admin  // Soon
 # Exit Account
 
-def userPage(user_id):
-    user = get_user_by_id(user_id)
-    println_colored(f"{lang['welcome']} {user['name']}!", Color.GREEN)
-    while True:
-        println_colored("==================================", Color.DARK_ORANGE)
-        println_colored(f"1 -> {lang['product_list']}", Color.CYAN)
-        println_colored(f"2 -> {lang['my_balance']}", Color.CYAN)
-        println_colored(f"3 -> {lang['add_balance']}", Color.CYAN)  # Balans qo'shish
-        println_colored(f"4 -> {lang['buy_product']}", Color.CYAN)
-        println_colored(f"5 -> {lang['expensive_product_list']}", Color.CYAN)
-        println_colored(f"6 -> {lang['my_products']}", Color.CYAN)
-        println_colored(f"7 -> {lang['my_profile']}", Color.CYAN)
-        println_colored(f"8 -> {lang['edit_profile']}", Color.CYAN)
-        println_colored(f"9 -> {lang['search_product']}", Color.CYAN)
-        println_colored(f"10 -> {lang['favorite_product']}", Color.CYAN)
-        println_colored(f"11 -> {lang['delete_account']}", Color.CYAN)
-        println_colored(f"12 -> {lang['contact_admin']}", Color.CYAN)
-        println_colored(f"13 -> {lang['exit_account']}", Color.CYAN)
-        println_colored("==================================", Color.DARK_ORANGE)
 
-        choose = input(lang['choice'])
+def getUserById(user_id):
+    user = None  # Userni aniqlash
+    for u in users:
+        if u["id"] == user_id:
+            user = u
+            break
+    return user
 
-        if choose == '1':
-            productList(user_id)
-        elif choose == '2':
-            myBalance(user_id)
-        elif choose == '3':
-            addBalance(user_id)
-        elif choose == '4':
-            buyProduct(user_id)
-        elif choose == '5':
-            sortExpensiveProduct()
-        elif choose == '6':
-            myProducts(user_id)
-        elif choose == '7':
-            myProfile(user_id)
-        elif choose == '8':
-            editProfile(user_id)
-        elif choose == '9':
-            searchProduct()
-        elif choose == '10':
-            favoriteProduct(user_id)
-        elif choose == '11':
-            confirm = input(f"{lang['confirm_removal_account']} (y/n): ").strip().lower()
-            if confirm == 'y':
-                display_loading_animation(lang['loading'], Color.CYAN)
-                if delete_account(user_id):
-                    println_colored(f"{lang['account_deleted']}", Color.GREEN)
-                    return
-            else:
-                println_colored(lang['removal_cancelled'], Color.RED)
-        elif choose == '12':
-            contact_admin(user_id)
-        elif choose == '13':
-            confirm = input(f"{lang['confirm_logout']} (y/n): ").strip().lower()
-            if confirm == 'y':
-                display_loading_animation(lang['loading'], Color.CYAN)
-                println_colored(f"{lang['account_exited']}", Color.GREEN)
-                return
-            else:
-                println_colored(lang['action_cancelled'], Color.RED)
-        else:
-            println_colored(lang['invalid_choice'], Color.RED)
+
+def getProductById(product_id):
+    product = None
+    for p in products:
+        if p["id"] == product_id:
+            product = p
+            break
+    return product
 
 
 def send_message_to_admin(user_id, title, description):
+    # Message To Admin  { kimdan { id ism login } kimga { admin,id, }
     user = next((u for u in users if u['id'] == user_id), None)
     if user:
         admin_info['messages'].append({
@@ -108,28 +64,33 @@ def send_message_to_admin(user_id, title, description):
 
 def contact_admin(user_id):
     while True:
+        # Chatting Adming  (:)
         print(f"\n1. {lang['message_to_admin']}")
         print(f"2. {lang['admin_answers']}")
         print(f"3. {lang['back']}")
-
         choice = input(f"{lang['choice']}")
 
+        # Adminga xabar yuborish
         if choice == "1":
             title = input(f"{lang['enter_message_title']}:")
             description = input(f"{lang['enter_message_description']}: ")
             send_message_to_admin(user_id, title, description)
+        # Admindan kelgan xabar
         elif choice == "2":
+            #  user_message = users[index]['messages] { messageIsm,description, kimdan {superadmmin,id }
+            # kimga { myId,myLogin }
             user_messages = users[user_id - 1].get('messages', [])
             if user_messages:
                 println_colored(f"{users[user_id - 1]['name']} {lang['replies_admin']}:")
                 for msg in user_messages:
-                    from_name = msg['from']['name']
-                    message = msg['description']  # Assuming description is the message body
+                    from_name = msg['from']['name']  ##Kimdan ligi   :superadmin
+                    message = msg['description']  # DEscription )
                     println_colored(f"{from_name} {lang['answer']}: {message}", Color.CYAN)
             else:
                 println_colored(f"{lang['no_messages']}", Color.YELLOW)
 
         elif choice == "3":
+            # just break )
             print(f"{lang['back']}")
             break
         else:
@@ -138,12 +99,7 @@ def contact_admin(user_id):
 
 def delete_account(user_id):
     global users, products
-    user_to_delete = None
-
-    for user in users:
-        if user["id"] == user_id:
-            user_to_delete = user
-            break
+    user_to_delete = getUserById(user_id)
 
     if user_to_delete:
         deleted_user_id = user_to_delete["id"]
@@ -177,7 +133,6 @@ def get_user_favorites(user_id):
 
 def favoriteProduct(user_id):
     favorites = get_user_favorites(user_id)
-
     while True:
         println_colored("==================================", Color.DARK_ORANGE)
 
@@ -207,11 +162,7 @@ def favoriteProduct(user_id):
 
 
 def removeFromFavorites(user_id, product_id):
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
+    user = getUserById(user_id)
 
     product = None
     for p in products:
@@ -234,15 +185,12 @@ def removeFromFavorites(user_id, product_id):
     println_colored(f"{lang['remove_from_favorites']}", Color.GREEN)
 
 
-def searchProduct():
+def searchProduct(user_id):
     search_term = input(f"{lang['search_product_name']} : ").lower()
     found = False
-
     for product in products:
         if search_term in product['product_name'].lower():
-            println_colored(
-                f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
-                Color.DARK_ORANGE)
+            productDetail(product['id'], user_id=user_id)
             found = True
 
     if not found:
@@ -255,12 +203,7 @@ def checkLoginExists(new_login):
 
 def editProfile(user_id):
     display_loading_animation(lang['loading'], Color.MAGENTA)
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
-
+    user = getUserById(user_id=user_id)
     if not user:
         println_colored(lang['user_not_found'], Color.RED)
         return
@@ -270,11 +213,14 @@ def editProfile(user_id):
         Color.BLUE)
 
     println_colored(lang['edit_name_prompt'], Color.GREEN)
+
+    # New Name
     new_name = input(lang['new_name'])
     if new_name:
         user['name'] = new_name
         println_colored(f"{lang['name_updated_to']}: {user['name']}", Color.GREEN)
 
+    # New Login
     println_colored(lang['edit_login_prompt'], Color.GREEN)
     new_login = input(lang['new_login'])
     if new_login:
@@ -284,6 +230,7 @@ def editProfile(user_id):
             user['login'] = new_login
             println_colored(f"{lang['login_updated_to']}: {user['login']}", Color.GREEN)
 
+    # New Password
     println_colored(lang['edit_password_prompt'], Color.GREEN)
     new_password = input(lang['new_password'])
     if new_password:
@@ -299,7 +246,7 @@ def editProfile(user_id):
 
 def myProfile(user_id):
     display_loading_animation(lang['loading'], Color.MAGENTA)
-    user = get_user_by_id(user_id)
+    user = getUserById(user_id)
     if user:
         println_colored(f"========================== {lang['my_profile']} ==========================", Color.CYAN)
         println_colored(
@@ -312,7 +259,7 @@ def myProfile(user_id):
 
 def myProducts(user_id):
     display_loading_animation(lang['loading'], Color.MAGENTA)
-    user = get_user_by_id(user_id)
+    user = getUserById(user_id)
     if user:
         myProducts = user.get("myProducts", [])
         println_colored(f"========================== {lang['my_products']} ==========================", Color.CYAN)
@@ -339,11 +286,7 @@ def sortExpensiveProduct():
 
 def buyProduct(user_id):
     display_loading_animation(lang['loading'], Color.MAGENTA)
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
+    user = getUserById(user_id=user_id)
 
     if not user:
         println_colored(lang['user_not_found'], Color.RED)
@@ -357,11 +300,7 @@ def buyProduct(user_id):
                 Color.GREEN)
 
     product_id = input(lang['choice_product'])
-    product = None
-    for p in products:
-        if str(p["id"]) == product_id:
-            product = p
-            break
+    product = getProductById(product_id)
 
     if not product:
         println_colored(lang['invalid_product'], Color.RED)
@@ -413,11 +352,7 @@ def productList(user_id):
 def productDetail(product_id, user_id):
     display_loading_animation(f'{lang["loading"]}', Color.YELLOW)
     while True:
-        product = None
-        for p in products:
-            if p["id"] == product_id:
-                product = p
-                break
+        product = getProductById(product_id=product_id)
 
         if not product:
             print(f"{lang['product_not_found']}!")
@@ -455,21 +390,13 @@ def productDetail(product_id, user_id):
 
 
 def addComment(user_id, product_id):
-    product = None
-    for p in products:
-        if p["id"] == product_id:
-            product = p
-            break
+    product = getProductById(product_id)
 
     if not product:
         println_colored(f"{lang['product_not_found']}!", Color.RED)
         return
 
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
+    user = getUserById(user_id=user_id)
 
     if not user:
         println_colored(f"{lang['user_not_found']}!", Color.RED)
@@ -495,11 +422,7 @@ def get_current_date():
 
 
 def removeComment(product_id, comment_index, user_id):
-    product = None
-    for p in products:
-        if p["id"] == product_id:
-            product = p
-            break
+    product = getProductById(product_id)
 
     if not product:
         println_colored(f"{lang['product_not_found']}!", Color.RED)
@@ -509,11 +432,7 @@ def removeComment(product_id, comment_index, user_id):
         println_colored(f"{lang['invalid_index']}", Color.RED)
         return
 
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
+    user = getUserById(user_id)
 
     if not user:
         println_colored(f"{lang['user_not_found']}!", Color.RED)
@@ -530,17 +449,9 @@ def removeComment(product_id, comment_index, user_id):
 
 
 def addToFavorites(user_id, product_id):
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
+    user = getUserById(user_id)
 
-    product = None
-    for p in products:
-        if p["id"] == product_id:
-            product = p
-            break
+    product = getProductById(product_id)
 
     if not user:
         println_colored(f"{lang['user_not_found']}", Color.RED)
@@ -557,16 +468,9 @@ def addToFavorites(user_id, product_id):
     println_colored(f"{lang['add_to_favorites']}", Color.DARK_ORANGE)
 
 
-def get_user_by_id(user_id):
-    for user in users:
-        if user["id"] == user_id:
-            return user
-    return None
-
-
 def myBalance(user_id):
     display_loading_animation(lang['loading'], Color.MAGENTA)
-    user = get_user_by_id(user_id)
+    user = getUserById(user_id)
     if user:
         balance = user["balance"]
         println_colored(f"{lang['your_current_balance']}: {balance}", Color.GREEN)
@@ -575,7 +479,7 @@ def myBalance(user_id):
 
 
 def addBalance(user_id):
-    user = get_user_by_id(user_id)
+    user = getUserById(user_id)
     if user:
         amount = int(input(f"{lang['enter_amount']} "))
         if amount > 0:
@@ -587,3 +491,68 @@ def addBalance(user_id):
 
     else:
         println_colored(f"{lang['no_users_found']}", Color.RED)
+
+
+def userPage(user_id):
+    user = getUserById(user_id)
+    println_colored(f"{lang['welcome']} {user['name']}!", Color.GREEN)
+    while True:
+        println_colored("==================================", Color.DARK_ORANGE)
+        println_colored(f"1 -> {lang['product_list']}", Color.CYAN)
+        println_colored(f"2 -> {lang['my_balance']}", Color.CYAN)
+        println_colored(f"3 -> {lang['add_balance']}", Color.CYAN)  # Balans qo'shish
+        println_colored(f"4 -> {lang['buy_product']}", Color.CYAN)
+        println_colored(f"5 -> {lang['expensive_product_list']}", Color.CYAN)
+        println_colored(f"6 -> {lang['my_products']}", Color.CYAN)
+        println_colored(f"7 -> {lang['my_profile']}", Color.CYAN)
+        println_colored(f"8 -> {lang['edit_profile']}", Color.CYAN)
+        println_colored(f"9 -> {lang['search_product']}", Color.CYAN)
+        println_colored(f"10 -> {lang['favorite_product']}", Color.CYAN)
+        println_colored(f"11 -> {lang['delete_account']}", Color.CYAN)
+        println_colored(f"12 -> {lang['contact_admin']}", Color.CYAN)
+        println_colored(f"13 -> {lang['exit_account']}", Color.CYAN)
+        println_colored("==================================", Color.DARK_ORANGE)
+
+        choose = input(lang['choice'])
+
+        if choose == '1':
+            productList(user_id)
+        elif choose == '2':
+            myBalance(user_id)
+        elif choose == '3':
+            addBalance(user_id)
+        elif choose == '4':
+            buyProduct(user_id)
+        elif choose == '5':
+            sortExpensiveProduct()
+        elif choose == '6':
+            myProducts(user_id)
+        elif choose == '7':
+            myProfile(user_id)
+        elif choose == '8':
+            editProfile(user_id)
+        elif choose == '9':
+            searchProduct(user_id)
+        elif choose == '10':
+            favoriteProduct(user_id)
+        elif choose == '11':
+            confirm = input(f"{lang['confirm_removal_account']} (y/n): ").strip().lower()
+            if confirm == 'y':
+                display_loading_animation(lang['loading'], Color.CYAN)
+                if delete_account(user_id):
+                    println_colored(f"{lang['account_deleted']}", Color.GREEN)
+                    return
+            else:
+                println_colored(lang['removal_cancelled'], Color.RED)
+        elif choose == '12':
+            contact_admin(user_id)
+        elif choose == '13':
+            confirm = input(f"{lang['confirm_logout']} (y/n): ").strip().lower()
+            if confirm == 'y':
+                display_loading_animation(lang['loading'], Color.CYAN)
+                println_colored(f"{lang['account_exited']}", Color.GREEN)
+                return
+            else:
+                println_colored(lang['action_cancelled'], Color.RED)
+        else:
+            println_colored(lang['invalid_choice'], Color.RED)
