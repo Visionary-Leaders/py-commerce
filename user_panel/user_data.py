@@ -1,8 +1,8 @@
 from data.local_data import users
 
-def checkUser(login, password):
+def checkUser(login1, password1):
     for user in users:
-        if user["login"] == login and user["password"] == password:
+        if user["login"] == login1 and user["password"] == password1:
             return True
     return False
 
