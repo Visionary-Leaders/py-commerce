@@ -1,5 +1,4 @@
 from utils.util import println_colored, Color, display_loading_animation
-from data.local_data import lang
 from datetime import datetime
 from admin_panel.admin_data import admin_info
 from data.local_data import users, products, admin_info
@@ -21,6 +20,7 @@ from user_panel.user_data import users, getUserId
 # Contact Admin  // Soon
 # Exit Account
 
+language ={}
 
 def getUserById(user_id):
     user = None  # Userni aniqlash
@@ -57,23 +57,23 @@ def send_message_to_admin(user_id, title, description):
                 "role": "admin"
             }
         })
-        println_colored(f"{lang['message_sent']}: {title} | {description}", Color.GREEN)
+        println_colored(f"{language['message_sent']}: {title} | {description}", Color.GREEN)
     else:
-        println_colored(f"{lang['user_not_found']}.", Color.RED)
+        println_colored(f"{language['user_not_found']}.", Color.RED)
 
 
 def contact_admin(user_id):
     while True:
         # Chatting Adming  (:)
-        print(f"\n1. {lang['message_to_admin']}")
-        print(f"2. {lang['admin_answers']}")
-        print(f"3. {lang['back']}")
-        choice = input(f"{lang['choice']}")
+        print(f"\n1. {language['message_to_admin']}")
+        print(f"2. {language['admin_answers']}")
+        print(f"3. {language['back']}")
+        choice = input(f"{language['choice']}")
 
         # Adminga xabar yuborish
         if choice == "1":
-            title = input(f"{lang['enter_message_title']}:")
-            description = input(f"{lang['enter_message_description']}: ")
+            title = input(f"{language['enter_message_title']}:")
+            description = input(f"{language['enter_message_description']}: ")
             send_message_to_admin(user_id, title, description)
         # Admindan kelgan xabar
         elif choice == "2":
@@ -81,20 +81,20 @@ def contact_admin(user_id):
             # kimga { myId,myLogin }
             user_messages = users[user_id - 1].get('messages', [])
             if user_messages:
-                println_colored(f"{users[user_id - 1]['name']} {lang['replies_admin']}:")
+                println_colored(f"{users[user_id - 1]['name']} {language['replies_admin']}:")
                 for msg in user_messages:
                     from_name = msg['from']['name']  ##Kimdan ligi   :superadmin
                     message = msg['description']  # DEscription )
-                    println_colored(f"{from_name} {lang['answer']}: {message}", Color.CYAN)
+                    println_colored(f"{from_name} {language['answer']}: {message}", Color.CYAN)
             else:
-                println_colored(f"{lang['no_messages']}", Color.YELLOW)
+                println_colored(f"{language['no_messages']}", Color.YELLOW)
 
         elif choice == "3":
             # just break )
-            print(f"{lang['back']}")
+            print(f"{language['back']}")
             break
         else:
-            println_colored(f"{lang['invalid_choice']}", Color.RED)
+            println_colored(f"{language['invalid_choice']}", Color.RED)
 
 
 def delete_account(user_id):
@@ -137,28 +137,28 @@ def favoriteProduct(user_id):
         println_colored("==================================", Color.DARK_ORANGE)
 
         if not favorites:
-            println_colored(f"{lang['you_dont_have_favorites']}", Color.RED)
+            println_colored(f"{language['you_dont_have_favorites']}", Color.RED)
         else:
-            println_colored(f"{lang['products']}:", Color.CYAN)
+            println_colored(f"{language['products']}:", Color.CYAN)
             for product in favorites:
                 print(f"- {product['name']} (ID: {product['id']})")
 
         println_colored("==================================", Color.DARK_ORANGE)
-        println_colored(f"1 -> {lang['remove_from_favorite']}", Color.CYAN)
-        println_colored(f"2 -> {lang['back']}", Color.CYAN)
+        println_colored(f"1 -> {language['remove_from_favorite']}", Color.CYAN)
+        println_colored(f"2 -> {language['back']}", Color.CYAN)
         println_colored("==================================", Color.DARK_ORANGE)
 
-        choice = input(f"{lang['choice']}")
+        choice = input(f"{language['choice']}")
 
         if choice == '1':
-            product_id = input(f"{lang['enter_product_id']}: ")
+            product_id = input(f"{language['enter_product_id']}: ")
             removeFromFavorites(user_id, product_id)
 
         elif choice == '2':
             break
 
         else:
-            println_colored(f"{lang['invalid_choice']}", Color.RED)
+            println_colored(f"{language['invalid_choice']}", Color.RED)
 
 
 def removeFromFavorites(user_id, product_id):
@@ -171,22 +171,22 @@ def removeFromFavorites(user_id, product_id):
             break
 
     if not user:
-        println_colored(f"{lang['user_not_found']}", Color.RED)
+        println_colored(f"{language['user_not_found']}", Color.RED)
         return
     if not product:
-        println_colored(f"{lang['product_not_found']}", Color.RED)
+        println_colored(f"{language['product_not_found']}", Color.RED)
         return
 
     if product not in user["favoriteProducts"]:
-        println_colored(f"{lang['product_not_found']}.", Color.RED)
+        println_colored(f"{language['product_not_found']}.", Color.RED)
         return
 
     user["favoriteProducts"].remove(product)
-    println_colored(f"{lang['remove_from_favorites']}", Color.GREEN)
+    println_colored(f"{language['remove_from_favorites']}", Color.GREEN)
 
 
 def searchProduct(user_id):
-    search_term = input(f"{lang['search_product_name']} : ").lower()
+    search_term = input(f"{language['search_product_name']} : ").lower()
     found = False
     for product in products:
         if search_term in product['product_name'].lower():
@@ -194,7 +194,7 @@ def searchProduct(user_id):
             found = True
 
     if not found:
-        println_colored(lang['product_not_found'], Color.RED)
+        println_colored(language['product_not_found'], Color.RED)
 
 
 def checkLoginExists(new_login):
@@ -202,116 +202,116 @@ def checkLoginExists(new_login):
 
 
 def editProfile(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     user = getUserById(user_id=user_id)
     if not user:
-        println_colored(lang['user_not_found'], Color.RED)
+        println_colored(language['user_not_found'], Color.RED)
         return
 
     println_colored(
-        f"{lang['current_profile']}:\n{lang['name']}: {user['name']}\n{lang['login']}: {user['login']}\n{lang['balance']}: {user['balance']}\n",
+        f"{language['current_profile']}:\n{language['name']}: {user['name']}\n{language['login']}: {user['login']}\n{language['balance']}: {user['balance']}\n",
         Color.BLUE)
 
-    println_colored(lang['edit_name_prompt'], Color.GREEN)
+    println_colored(language['edit_name_prompt'], Color.GREEN)
 
     # New Name
-    new_name = input(lang['new_name'])
+    new_name = input(language['new_name'])
     if new_name:
         user['name'] = new_name
-        println_colored(f"{lang['name_updated_to']}: {user['name']}", Color.GREEN)
+        println_colored(f"{language['name_updated_to']}: {user['name']}", Color.GREEN)
 
     # New Login
-    println_colored(lang['edit_login_prompt'], Color.GREEN)
-    new_login = input(lang['new_login'])
+    println_colored(language['edit_login_prompt'], Color.GREEN)
+    new_login = input(language['new_login'])
     if new_login:
         if checkLoginExists(new_login):
-            println_colored(lang['login_taken'], Color.RED)
+            println_colored(language['login_taken'], Color.RED)
         else:
             user['login'] = new_login
-            println_colored(f"{lang['login_updated_to']}: {user['login']}", Color.GREEN)
+            println_colored(f"{language['login_updated_to']}: {user['login']}", Color.GREEN)
 
     # New Password
-    println_colored(lang['edit_password_prompt'], Color.GREEN)
-    new_password = input(lang['new_password'])
+    println_colored(language['edit_password_prompt'], Color.GREEN)
+    new_password = input(language['new_password'])
     if new_password:
-        confirm_password = input(lang['confirm_password'])
+        confirm_password = input(language['confirm_password'])
         if new_password == confirm_password:
             user['password'] = new_password
-            println_colored(f"{lang['password_updated']}", Color.GREEN)
+            println_colored(f"{language['password_updated']}", Color.GREEN)
         else:
-            println_colored(lang['password_mismatch'], Color.RED)
+            println_colored(language['password_mismatch'], Color.RED)
 
-    println_colored(f"{lang['profile_updated']}", Color.GREEN)
+    println_colored(f"{language['profile_updated']}", Color.GREEN)
 
 
 def myProfile(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     user = getUserById(user_id)
     if user:
-        println_colored(f"========================== {lang['my_profile']} ==========================", Color.CYAN)
+        println_colored(f"========================== {language['my_profile']} ==========================", Color.CYAN)
         println_colored(
-            f"{lang['name']}: {user['name']} | {lang['login']}: {user['login']} | {lang['password']} : {user['password']} | {lang['balance']}: {user['balance']}",
+            f"{language['name']}: {user['name']} | {language['login']}: {user['login']} | {language['password']} : {user['password']} | {language['balance']}: {user['balance']}",
             Color.DARK_ORANGE)
         println_colored("============================================================", Color.CYAN)
     else:
-        println_colored(f"{lang['no_users_found']}", Color.RED)
+        println_colored(f"{language['no_users_found']}", Color.RED)
 
 
 def myProducts(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     user = getUserById(user_id)
     if user:
         myProducts = user.get("myProducts", [])
-        println_colored(f"========================== {lang['my_products']} ==========================", Color.CYAN)
+        println_colored(f"========================== {language['my_products']} ==========================", Color.CYAN)
         for product in myProducts:
             println_colored(
-                f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
+                f"ID: {product['id']} | {language['name']}: {product['product_name']} | {language['price']}: {product['product_price']} | {language['date']}: {product['product_date']}",
                 Color.DARK_ORANGE)
         println_colored("============================================================", Color.CYAN)
     else:
-        println_colored(f"{lang['no_users_found']}", Color.RED)
+        println_colored(f"{language['no_users_found']}", Color.RED)
 
 
 def sortExpensiveProduct():
-    display_loading_animation(lang['loading'], Color.MAGENTA)
-    println_colored(f"========================== {lang['expensive_product_list']} ==========================",
+    display_loading_animation(language['loading'], Color.MAGENTA)
+    println_colored(f"========================== {language['expensive_product_list']} ==========================",
                     Color.YELLOW)
     filtered_products = sorted(products, key=lambda product: product['product_price'], reverse=True)
     for product in filtered_products:
         println_colored(
-            f"ID: {product['id']} | {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
+            f"ID: {product['id']} | {language['name']}: {product['product_name']} | {language['price']}: {product['product_price']} | {language['date']}: {product['product_date']}",
             Color.DARK_ORANGE)
     println_colored("============================================================", Color.YELLOW)
 
 
 def buyProduct(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     user = getUserById(user_id=user_id)
 
     if not user:
-        println_colored(lang['user_not_found'], Color.RED)
+        println_colored(language['user_not_found'], Color.RED)
         return
 
-    println_colored(lang['product_list'], Color.BLUE)
+    println_colored(language['product_list'], Color.BLUE)
     for product in products:
         if product not in user["myProducts"]:
             println_colored(
-                f"ID: {product['id']} -> {product['product_name']} | {lang['price']}: {product['product_price']}",
+                f"ID: {product['id']} -> {product['product_name']} | {language['price']}: {product['product_price']}",
                 Color.GREEN)
 
-    product_id = input(lang['choice_product'])
+    product_id = input(language['choice_product'])
     product = getProductById(product_id)
 
     if not product:
-        println_colored(lang['invalid_product'], Color.RED)
+        println_colored(language['invalid_product'], Color.RED)
         return
 
     if user["balance"] < int(product["product_price"]):
-        println_colored(lang['insufficient_balance'], Color.RED)
+        println_colored(language['insufficient_balance'], Color.RED)
         return
 
     user["balance"] -= int(product["product_price"])
-    println_colored(f"{lang['success_bought_product']} {lang['remaining_balance']} {user['balance']}", Color.GREEN)
+    println_colored(f"{language['success_bought_product']} {language['remaining_balance']} {user['balance']}", Color.GREEN)
 
     user["myProducts"].append(product)
 
@@ -319,92 +319,92 @@ def buyProduct(user_id):
 
 
 def productList(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     while True:
         if not products:
-            println_colored(lang['no_products'], Color.RED)
+            println_colored(language['no_products'], Color.RED)
         else:
-            println_colored(f"========================== {lang['products']} ==========================", Color.CYAN)
+            println_colored(f"========================== {language['products']} ==========================", Color.CYAN)
             for product in products:
                 println_colored(
-                    f"ID: {product['id']} {lang['name']}: {product['product_name']} | {lang['price']}: {product['product_price']} | {lang['date']}: {product['product_date']}",
+                    f"ID: {product['id']} {language['name']}: {product['product_name']} | {language['price']}: {product['product_price']} | {language['date']}: {product['product_date']}",
                     Color.DARK_ORANGE)
 
             println_colored("============================================================", Color.CYAN)
-            print(f"\n1. {lang['add_to_favorites']}")
-            print(f"2. {lang['product_details']}")
-            print(f"3. {lang['back']}")
+            print(f"\n1. {language['add_to_favorites']}")
+            print(f"2. {language['product_details']}")
+            print(f"3. {language['back']}")
 
-            action = input(lang["choice"])
+            action = input(language["choice"])
 
             if action == "1":
-                product_id = int(input(lang["enter_product_id"]))
+                product_id = int(input(language["enter_product_id"]))
                 addToFavorites(user_id, product_id)
             elif action == '2':
-                product_id = int(input(lang["enter_product_id"]))
+                product_id = int(input(language["enter_product_id"]))
                 productDetail(product_id=product_id, user_id=user_id)
             elif action == "3":
                 return
             else:
-                println_colored(lang["invalid_choice"], Color.RED)
+                println_colored(language["invalid_choice"], Color.RED)
 
 
 def productDetail(product_id, user_id):
-    display_loading_animation(f'{lang["loading"]}', Color.YELLOW)
+    display_loading_animation(f'{language["loading"]}', Color.YELLOW)
     while True:
         product = getProductById(product_id=product_id)
 
         if not product:
-            print(f"{lang['product_not_found']}!")
+            print(f"{language['product_not_found']}!")
             return
 
-        println_colored(f"\n==== {lang['product_detail']} ====", Color.DARK_ORANGE)
-        print(f"{lang['name']}: {product['product_name']}")
-        print(f"{lang['price']}: {product['product_price']}")
-        print(f"{lang['date']}: {product['product_date']}")
+        println_colored(f"\n==== {language['product_detail']} ====", Color.DARK_ORANGE)
+        print(f"{language['name']}: {product['product_name']}")
+        print(f"{language['price']}: {product['product_price']}")
+        print(f"{language['date']}: {product['product_date']}")
 
-        println_colored(f"\n{lang['comments']}:", Color.YELLOW)
+        println_colored(f"\n{language['comments']}:", Color.YELLOW)
         if len(product["comments"]) == 0:  # Correctly check if there are no comments
-            println_colored(f"{lang['no_comments']}", Color.MAGENTA)
+            println_colored(f"{language['no_comments']}", Color.MAGENTA)
         else:
             for idx, comment in enumerate(product["comments"], start=1):
                 print(f"{idx}. {comment['login']} ({comment['date']}): {comment['text']}")
 
-        print(f"\n1. {lang['add_comment']}")
-        print(f"2. {lang['remove_comment']}")
-        print(f"3. {lang['back']}")
+        print(f"\n1. {language['add_comment']}")
+        print(f"2. {language['remove_comment']}")
+        print(f"3. {language['back']}")
 
-        action = input(f"{lang['choice']} ")
+        action = input(f"{language['choice']} ")
         if action == "1":
             addComment(user_id, product_id)
         elif action == "2":
-            comment_index = input(f"{lang['input_comment_id']}: ")
+            comment_index = input(f"{language['input_comment_id']}: ")
             if comment_index.isdigit():
                 removeComment(product_id, int(comment_index) - 1, user_id)
             else:
-                println_colored(f"{lang['invalid_index']}", Color.RED)
+                println_colored(f"{language['invalid_index']}", Color.RED)
         elif action == "3":
             return
         else:
-            println_colored(f"{lang['invalid_choice']}", Color.RED)
+            println_colored(f"{language['invalid_choice']}", Color.RED)
 
 
 def addComment(user_id, product_id):
     product = getProductById(product_id)
 
     if not product:
-        println_colored(f"{lang['product_not_found']}!", Color.RED)
+        println_colored(f"{language['product_not_found']}!", Color.RED)
         return
 
     user = getUserById(user_id=user_id)
 
     if not user:
-        println_colored(f"{lang['user_not_found']}!", Color.RED)
+        println_colored(f"{language['user_not_found']}!", Color.RED)
         return
 
-    comment_text = input(f"{lang['input_comment']} ").strip()
+    comment_text = input(f"{language['input_comment']} ").strip()
     if not comment_text:
-        println_colored(f"{lang['comment_empty']}", Color.RED)
+        println_colored(f"{language['comment_empty']}", Color.RED)
         return
 
     # Add the comment
@@ -414,7 +414,7 @@ def addComment(user_id, product_id):
         "text": comment_text
     }
     product["comments"].append(comment)
-    println_colored(f"{lang['comment_added_successfully']}", Color.GREEN)
+    println_colored(f"{language['comment_added_successfully']}", Color.GREEN)
 
 
 def get_current_date():
@@ -425,27 +425,27 @@ def removeComment(product_id, comment_index, user_id):
     product = getProductById(product_id)
 
     if not product:
-        println_colored(f"{lang['product_not_found']}!", Color.RED)
+        println_colored(f"{language['product_not_found']}!", Color.RED)
         return
 
     if comment_index < 0 or comment_index >= len(product["comments"]):
-        println_colored(f"{lang['invalid_index']}", Color.RED)
+        println_colored(f"{language['invalid_index']}", Color.RED)
         return
 
     user = getUserById(user_id)
 
     if not user:
-        println_colored(f"{lang['user_not_found']}!", Color.RED)
+        println_colored(f"{language['user_not_found']}!", Color.RED)
         return
 
     # userni commenti ekanligiga tekshirish
     comment = product["comments"][comment_index]
     if comment["login"] != user["login"]:
-        println_colored(f"{lang['cannot_delete_others_comment']}", Color.RED)
+        println_colored(f"{language['cannot_delete_others_comment']}", Color.RED)
         return
 
     removed_comment = product["comments"].pop(comment_index)
-    println_colored(f"{lang['comment_removed']}: {removed_comment['text']}", Color.GREEN)
+    println_colored(f"{language['comment_removed']}: {removed_comment['text']}", Color.GREEN)
 
 
 def addToFavorites(user_id, product_id):
@@ -454,66 +454,68 @@ def addToFavorites(user_id, product_id):
     product = getProductById(product_id)
 
     if not user:
-        println_colored(f"{lang['user_not_found']}", Color.RED)
+        println_colored(f"{language['user_not_found']}", Color.RED)
         return
     if not product:
-        println_colored(f"{lang['product_not_found']}", Color.RED)
+        println_colored(f"{language['product_not_found']}", Color.RED)
         return
 
     if product in user["favoriteProducts"]:
-        println_colored(f"{lang['already_favorites']}.", Color.RED)
+        println_colored(f"{language['already_favorites']}.", Color.RED)
         return
 
     user["favoriteProducts"].append(product)
-    println_colored(f"{lang['add_to_favorites']}", Color.DARK_ORANGE)
+    println_colored(f"{language['add_to_favorites']}", Color.DARK_ORANGE)
 
 
 def myBalance(user_id):
-    display_loading_animation(lang['loading'], Color.MAGENTA)
+    display_loading_animation(language['loading'], Color.MAGENTA)
     user = getUserById(user_id)
     if user:
         balance = user["balance"]
-        println_colored(f"{lang['your_current_balance']}: {balance}", Color.GREEN)
+        println_colored(f"{language['your_current_balance']}: {balance}", Color.GREEN)
     else:
-        println_colored(f"{lang['no_users_found']}", Color.RED)
+        println_colored(f"{language['no_users_found']}", Color.RED)
 
 
 def addBalance(user_id):
     user = getUserById(user_id)
     if user:
-        amount = int(input(f"{lang['enter_amount']} "))
+        amount = int(input(f"{language['enter_amount']} "))
         if amount > 0:
             user["balance"] += amount
-            display_loading_animation(lang['loading'], Color.MAGENTA)
-            println_colored(f"{lang['success_added_balance']}: {user['balance']}", Color.GREEN)
+            display_loading_animation(language['loading'], Color.MAGENTA)
+            println_colored(f"{language['success_added_balance']}: {user['balance']}", Color.GREEN)
         else:
-            println_colored(f"{lang['invalid_amount']}", Color.RED)
+            println_colored(f"{language['invalid_amount']}", Color.RED)
 
     else:
-        println_colored(f"{lang['no_users_found']}", Color.RED)
+        println_colored(f"{language['no_users_found']}", Color.RED)
 
 
-def userPage(user_id):
+def userPage(user_id,lang):
+    global language
+    language=lang
     user = getUserById(user_id)
-    println_colored(f"{lang['welcome']} {user['name']}!", Color.GREEN)
+    println_colored(f"{language['welcome']} {user['name']}!", Color.GREEN)
     while True:
         println_colored("==================================", Color.DARK_ORANGE)
-        println_colored(f"1 -> {lang['product_list']}", Color.CYAN)
-        println_colored(f"2 -> {lang['my_balance']}", Color.CYAN)
-        println_colored(f"3 -> {lang['add_balance']}", Color.CYAN)  # Balans qo'shish
-        println_colored(f"4 -> {lang['buy_product']}", Color.CYAN)
-        println_colored(f"5 -> {lang['expensive_product_list']}", Color.CYAN)
-        println_colored(f"6 -> {lang['my_products']}", Color.CYAN)
-        println_colored(f"7 -> {lang['my_profile']}", Color.CYAN)
-        println_colored(f"8 -> {lang['edit_profile']}", Color.CYAN)
-        println_colored(f"9 -> {lang['search_product']}", Color.CYAN)
-        println_colored(f"10 -> {lang['favorite_product']}", Color.CYAN)
-        println_colored(f"11 -> {lang['delete_account']}", Color.CYAN)
-        println_colored(f"12 -> {lang['contact_admin']}", Color.CYAN)
-        println_colored(f"13 -> {lang['exit_account']}", Color.CYAN)
+        println_colored(f"1 -> {language['product_list']}", Color.CYAN)
+        println_colored(f"2 -> {language['my_balance']}", Color.CYAN)
+        println_colored(f"3 -> {language['add_balance']}", Color.CYAN)  # Balans qo'shish
+        println_colored(f"4 -> {language['buy_product']}", Color.CYAN)
+        println_colored(f"5 -> {language['expensive_product_list']}", Color.CYAN)
+        println_colored(f"6 -> {language['my_products']}", Color.CYAN)
+        println_colored(f"7 -> {language['my_profile']}", Color.CYAN)
+        println_colored(f"8 -> {language['edit_profile']}", Color.CYAN)
+        println_colored(f"9 -> {language['search_product']}", Color.CYAN)
+        println_colored(f"10 -> {language['favorite_product']}", Color.CYAN)
+        println_colored(f"11 -> {language['delete_account']}", Color.CYAN)
+        println_colored(f"12 -> {language['contact_admin']}", Color.CYAN)
+        println_colored(f"13 -> {language['exit_account']}", Color.CYAN)
         println_colored("==================================", Color.DARK_ORANGE)
 
-        choose = input(lang['choice'])
+        choose = input(language['choice'])
 
         if choose == '1':
             productList(user_id)
@@ -536,23 +538,23 @@ def userPage(user_id):
         elif choose == '10':
             favoriteProduct(user_id)
         elif choose == '11':
-            confirm = input(f"{lang['confirm_removal_account']} (y/n): ").strip().lower()
+            confirm = input(f"{language['confirm_removal_account']} (y/n): ").strip().lower()
             if confirm == 'y':
-                display_loading_animation(lang['loading'], Color.CYAN)
+                display_loading_animation(language['loading'], Color.CYAN)
                 if delete_account(user_id):
-                    println_colored(f"{lang['account_deleted']}", Color.GREEN)
+                    println_colored(f"{language['account_deleted']}", Color.GREEN)
                     return
             else:
-                println_colored(lang['removal_cancelled'], Color.RED)
+                println_colored(language['removal_cancelled'], Color.RED)
         elif choose == '12':
             contact_admin(user_id)
         elif choose == '13':
-            confirm = input(f"{lang['confirm_logout']} (y/n): ").strip().lower()
+            confirm = input(f"{language['confirm_logout']} (y/n): ").strip().lower()
             if confirm == 'y':
-                display_loading_animation(lang['loading'], Color.CYAN)
-                println_colored(f"{lang['account_exited']}", Color.GREEN)
+                display_loading_animation(language['loading'], Color.CYAN)
+                println_colored(f"{language['account_exited']}", Color.GREEN)
                 return
             else:
-                println_colored(lang['action_cancelled'], Color.RED)
+                println_colored(language['action_cancelled'], Color.RED)
         else:
-            println_colored(lang['invalid_choice'], Color.RED)
+            println_colored(language['invalid_choice'], Color.RED)

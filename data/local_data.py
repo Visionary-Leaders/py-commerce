@@ -317,4 +317,3 @@ users = [
     },
 ]
 
-lang = uz
